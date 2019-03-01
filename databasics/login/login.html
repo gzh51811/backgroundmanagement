@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="keywords" content="Flat Dark Web Login Form Responsive Templates, Iphone Widget Template, Smartphone login forms,Login form, Widget Template, Responsive Templates, a Ipad 404 Templates, Flat Responsive Templates"
+	/>
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+
+	<script src="jquery-1.10.1.min.js"></script>
+<style>
+.inf{
+	width: 20px;
+	height: 20px;
+	display: none;
+	background: url(images/zc-ico.png)no-repeat;
+}
+
+</style>
+</head>
+
+<body>
+
+	<h1>后台管理系统</h1>
+	<div class="login-form">
+		<!-- <div class="close"> </div> -->
+		<div class="head-info">
+			<label class="lbl-1"> </label>
+			<label class="lbl-2"> </label>
+			<label class="lbl-3"> </label>
+		</div>
+		<div class="clear"> </div>
+		<div class="avtar">
+			<img src="images/tim1.png" width="80" height="80" />
+		</div>
+		<form>
+			<input type="text" class="text" placeholder="用户名/手机号">
+			<span id="inf" class="inf"></span>
+			<div class="key">
+				<input type="password" placeholder="******" class="paws">
+				<span id="inf2" class="inf"></span>
+			</div>
+		</form>
+		<div class="signin">
+			<input type="submit" value="Login" class="btn">
+		</div>
+	</div>
+
+	<script>
+		var text = document.getElementsByClassName('text')[0];
+		var paws = document.getElementsByClassName('paws')[0];
+		var inf = document.getElementById('inf');
+		var inf2 = document.getElementById('inf2');
+		console.log(inf);
+		text.onblur = () => {
+			let _username = text.value;
+			if (_username.trim()) {
+				var reg = /^[1]+[345678]\d{9}$/;
+				var res = reg.test(_username);//检测一个字符串是否匹配
+				console.log(res);
+				if (res) {
+					inf.style.display = 'inline-block';
+					inf.style.backgroundPosition="-40px -151px" ;
+					// 正则通过再发送ajax验证用户名是否存在
+				} else {
+					inf.style.display = 'inline-block';
+					inf.style.backgroundPosition="-62px -151px" ;
+				}
+			}
+		}
+		paws.onblur =()=>{
+			let psw = paws.value;
+			if (psw.trim()) {
+				var reg = /^[a-zA-Z][\w\-]{5,17}$/;
+				var res = reg.test(psw);//检测一个字符串是否匹配
+				console.log(res);
+				if (res) {
+					inf2.style.display = 'inline-block';
+					inf2.style.backgroundPosition="-40px -151px" ;
+					// 正则通过再发送ajax验证用户名是否存在
+				} else {
+					inf2.style.display = 'inline-block';
+					inf2.style.backgroundPosition="-62px -151px" ;
+				}
+			}
+		}
+		$('.signin').click(function () {
+			let _username = $('.text').val();
+			let _password = $('.paws').val();
+			// let _mdl = mdl.checked;
+
+			$.ajax({
+				type: "post", //请求方式
+				url: '../js/login.js', //路径
+				async: true, //异步:默认是异步，可以不写
+				data: {
+					name: _username,
+					paws: _password,
+					// qty: 15
+				}, //传输给后台的数据
+				success: function (str) {
+					// console.log(str);
+					checkname(str);
+				}
+			});
+			function checkname() {
+				if (str) {
+					console.log('正确');
+					location.href = '../index.html';
+				} else {
+					console.log('错误');
+				}
+			}
+
+		})
+
+	</script>
+</body>
+
+</html>
