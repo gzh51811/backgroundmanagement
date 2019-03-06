@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>添加商品</title>
+    <link rel="stylesheet" href="../layui/layui/css/layui.css">
+    <script src="../layui/layui/layui.js"></script>
+    <script src="jquery-1.10.1.min.js"></script>
+</head>
+<style>
+    .layui-upload-img {
+        width: 92px;
+        height: 92px;
+        margin: 0 10px 10px 0;
+    }
+
+    .layui-upload {
+        padding-left: 30px;
+    }
+</style>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item">
+                    <a href="">控制台</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">商品管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">用户</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">其它系统</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="">邮件管理</a>
+                        </dd>
+                        <dd>
+                            <a href="">消息管理</a>
+                        </dd>
+                        <dd>
+                            <a href="">授权管理</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="../layui/layui/images/tim1.png" class="layui-nav-img">node
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="">基本资料</a>
+                        </dd>
+                        <dd>
+                            <a href="">安全设置</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">退了</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a class="" href="javascript:;">商品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="./list.html">商品列表</a>
+                            </dd>
+                            <dd>
+                                <a href="./goods_clsaaify.html">商品分类</a>
+                            </dd>
+                            <dd class="layui-this">
+                                <a href="./goods_add.html">商品添加</a>
+                            </dd>
+                            <dd>
+                                <a href=""></a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">用户管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="./username_list.html">用户列表</a>
+                            </dd>
+                            <dd>
+                                <a href="./add_name.html">添加用户</a>
+                            </dd>
+
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">订单管理</a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="javascript:;">订单信息</a>
+                            </dd>
+
+
+                        </dl>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">商品名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"
+                                id="name" value="">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">商品价格</label>
+                            <div class="layui-input-inline">
+                                <input type="tel" name="yuan" class="layui-input" id="price" value="">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">销售价格</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="xian" class="layui-input" id="Jprice" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">类型选择</label>
+                        <div class="layui-input-block">
+                            <select name="class" lay-verify="required" id="kind">
+                                <option value=""></option>
+                                <option value="0">手机</option>
+                                <option value="1">笔记本</option>
+                                <option value="2">平板</option>
+                                <option value="3">配件</option>
+                                <option value="4">其他</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">库存</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="num" autocomplete="off" class="layui-input" id="kucun" value="">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">件</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="status" autocomplete="off" class="layui-input" id="kucun" value="">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">件</div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">复选框</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="like[write]" title="热卖">
+                            <input type="checkbox" name="like[read]" title="推荐" checked>
+                            <input type="checkbox" name="like[dai]" title="促销">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上架</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="switch" lay-skin="switch">
+                        </div>
+                    </div>
+                    <div class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">上线日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="date" class="layui-input" id="test1" placeholder="yyyy-MM-dd">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn MYcommit" lay-submit="" lay-filter="formDemo">立即提交</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+
+        </div>
+    </div>
+    <script src="../layui/layui/layui.js"></script>
+    <script>
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+        });
+        //获取几个需要渲染的框
+        var Sname = document.getElementById('name');
+        var price = document.getElementById('price');
+        var Jpirce = document.getElementById('Jprice');
+        var kucun = document.getElementById('kucun');
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                console.log(data.field);
+                layer.msg(JSON.stringify(data.field));
+                console.log(data);
+                let datas = data.field;
+
+                $.ajax({
+                    type: "get", //请求方式
+                    url: "/api/add_goods", //路径
+                    async: true, //异步:默认是异步，可以不写
+                    data: datas,
+
+
+                    // 传输给后台的数据
+                    success: function (str) {
+
+                        console.log(str);
+
+                        if (str > 0) {
+                            location.href = "/html/list.html ";
+                        } else {
+
+                            alert('商品已存在');
+
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+
+
+
+
+    </script>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+    </script>
+</body>
+
+</html>

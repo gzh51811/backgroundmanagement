@@ -7,6 +7,7 @@
     <title>后台管理系统</title>
     <link rel="stylesheet" href="../layui/layui/css/layui.css">
     <script src="../layui/layui/layui.js"></script>
+    <script src="jquery-1.10.1.min.js"></script>
 </head>
 <style>
     .layui-upload-img {
@@ -78,13 +79,13 @@
                         <a class="" href="javascript:;">商品管理</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;">商品列表</a>
+                                <a href="./list.html">商品列表</a>
                             </dd>
                             <dd>
-                                <a href="javascript:;">商品分类</a>
+                                <a href="./goods_clsaaify.html">商品分类</a>
                             </dd>
-                            <dd>
-                                <a href="javascript:;">商品添加</a>
+                            <dd class="layui-this">
+                                <a href="./goods_add.html">商品添加</a>
                             </dd>
                             <dd>
                                 <a href=""></a>
@@ -95,10 +96,10 @@
                         <a href="javascript:;">用户管理</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;">用户列表</a>
+                                <a href="./username_list.html">用户列表</a>
                             </dd>
                             <dd>
-                                <a href="javascript:;">添加用户</a>
+                                <a href="./add_name.html">添加用户</a>
                             </dd>
 
                         </dl>
@@ -125,43 +126,40 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">商品名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                            <input type="text" name="name" disabled required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"
+                                id="name" value="">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">商品副标题</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
+
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">商品价格</label>
                             <div class="layui-input-inline">
-                                <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                                <input type="tel" name="phone" class="layui-input" id="price" value="">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">销售价格</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                                <input type="text" name="price" class="layui-input" id="Jprice" value="">
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">选择框</label>
+                        <label class="layui-form-label">类型选择</label>
                         <div class="layui-input-block">
-                            <select name="city" lay-verify="required">
+                            <select name="city" lay-verify="required" id="kind">
                                 <option value=""></option>
                                 <option value="0">手机</option>
-                                <option value="1">电脑</option>
+                                <option value="1">笔记本</option>
                                 <option value="2">平板</option>
                                 <option value="3">配件</option>
                                 <option value="4">其他</option>
+
                             </select>
                         </div>
                     </div>
-                    <div class="layui-upload">
+                    <!-- <div class="layui-upload">
                         <button type="button" class="layui-btn" id="test2">多图片上传</button>
                         <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
                             预览图：
@@ -189,11 +187,11 @@
                                 }
                             });
                         });
-                    </script>
+                    </script> -->
                     <div class="layui-form-item">
                         <label class="layui-form-label">库存</label>
                         <div class="layui-input-inline">
-                            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            <input type="text" name="num" autocomplete="off" class="layui-input" id="kucun" value="">
                         </div>
                         <div class="layui-form-mid layui-word-aux">件</div>
                     </div>
@@ -212,32 +210,20 @@
                         </div>
                     </div>
 
-                    <div class="layui-form-item layui-form-text">
+                    <!-- <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">商品描述</label>
                         <div class="layui-input-block">
                             <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            <button class="layui-btn MYcommit" lay-submit="" lay-filter="formDemo">立即提交</button>
                         </div>
                     </div>
                 </form>
 
-                <script>
-                    //Demo
-                    layui.use('form', function () {
-                        var form = layui.form;
 
-                        //监听提交
-                        form.on('submit(formDemo)', function (data) {
-                            layer.msg(JSON.stringify(data.field));
-                            return false;
-                        });
-                    });
-                </script>
             </div>
         </div>
 
@@ -246,7 +232,90 @@
 
         </div>
     </div>
-    <script src="../src/layui.js"></script>
+    <script src="../layui/layui/layui.js"></script>
+    <script>
+        //获取几个需要渲染的框
+        var Sname = document.getElementById('name');
+        var price = document.getElementById('price');
+        var Jpirce = document.getElementById('Jprice');
+        var kucun = document.getElementById('kucun');
+        //    let kind = document.getElementById('kind');
+        // var dlS= kind.childNode('dd');
+
+        // console.log(kind);
+        var data = location.search;//解码
+        var id = data.slice(4);//切掉？id=
+        $.ajax({
+            type: 'get',
+            url: '/api/edit_goods',
+            data: { id: id },
+            success: function (data) {
+                console.log(data);//打印后端传来的数据
+                console.log(data.data[0].name);//验证即将要用的数据
+                Sname.value = data.data[0].name;
+                price.value = data.data[0].oPrice;
+                Jpirce.value = data.data[0].nPrice;
+                kucun.value = data.data[0].reserve;
+                kind.value = data.data[0].class;
+                // let sub = document.getElementsByClassName('layui-btn')[1];
+                // console.log(sub);
+                // sub.onclick = function () {//提交修改数据
+                //     if (Sname.value.trim() && price.value.trim() && Jpirce.value.trim() && kucun.value.trim()) {
+                //         $.ajax({
+                //             type: 'get',
+                //             url: '/api/edit_txt',
+                //             data: { id: data.data[0].id, eName: Sname.value, ePrice: price.value, eJprice: Jpirce.value, eKucun: kucun.value },
+
+                //         })
+                //         location.href = "./list.html";
+                //     }
+                // }
+            }
+        });
+
+
+
+
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                console.log(data.field);
+                layer.msg(JSON.stringify(data.field));
+                // layer.msg(JSON.stringify(data.field));
+                console.log(data);
+                // console.log(data.field.title);
+                let datas = data.field;
+
+                $.ajax({
+                    type: "get", //请求方式
+                    url: "/api/edit_txt", //路径
+                    async: true, //异步:默认是异步，可以不写
+                    data: datas,
+
+
+                    // 传输给后台的数据
+                    success: function (str) {
+
+                        console.log(str);
+
+                        if (str > 0) {
+                            location.href = "/html/list.html ";
+                        } else {
+                            alert('修改未成功');
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+
+
+
+
+    </script>
     <script>
         //JavaScript代码区域
         layui.use('element', function () {

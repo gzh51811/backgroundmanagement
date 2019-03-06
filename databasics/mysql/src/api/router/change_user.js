@@ -1,18 +1,17 @@
 const express = require('express');
 const Router = express.Router();
-//引入连接池连接上数据库；
-const db = require('../db/data');
 
-//商品分类
+const db = require('../db/data');
+// console.log(data);
+
+//用户名列表
 Router.get('/', (req, res) => {
-    // console.log(res.query);
-    //连接数据表
-    let sql = "select * from classify_goods";
-    // let result = "select count(*) from classify_goods";select * from classify_goods
-    // select * from classify_goods where id in (select min(id) from classify_goods group by a)
-    // 查询表${res.query.goodsname}
+    //连接数据库
+    // console.log(req.query);
+    // console.log('req打印：' + req.query.id);
+    let sql = `select * from username_clsaaify where id='${req.query.id}'`;
+
     db.query(sql, (err, data) => {
-        // console.log(data);
         if (err) {
             res.send({ code: 1, msg: "连接不成功", });
             return

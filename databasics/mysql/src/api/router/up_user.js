@@ -10,24 +10,20 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 const jsonParser = bodyParser.json();
 
 Router.post('/', jsonParser, urlencodedParser, (req, res) => {
-    let { name, pasw } = req.body;
-    console.log(name, pasw);
-    //查询数据
-    var sql = `select * from username_clsaaify where username='${name}' and passw='${pasw}' `;
-    db.query(sql, function (err, result) {
-        // console.log(result);
+    let { title, passw, phone, modules, date, modules1, emil, desc1, add_date } = req.body;
+    console.log(title, passw, phone, modules, date, modules1, emil, desc1, add_date);
 
-        if (err) throw err;
-        if (result.length > 0) {
-            res.send('1');
-        } else {
-            res.send('0');
-        }
+    try {
+        //改数据库数据
+        var sql = `UPDATE username_clsaaify SET username= '${title}',passw= '${passw}',email= '${emil}',phone= '${phone}',bir= '${date}',desc1= '${desc1}',joinTime= '${add_date}',sex= '${modules}' WHERE username= '${title}' `;
 
-
-
-    })
-
+        db.query(sql, function (err, result) {
+            // console.log('result:'+result);
+            res.send('修改成功');
+        })
+    } catch (e) {
+        res.send('写入失败')
+    }
 
 });
 

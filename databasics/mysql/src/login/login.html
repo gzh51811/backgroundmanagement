@@ -10,15 +10,32 @@
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
 
 	<script src="jquery-1.10.1.min.js"></script>
-<style>
-.inf{
-	width: 20px;
-	height: 20px;
-	display: none;
-	background: url(images/zc-ico.png)no-repeat;
-}
+	<style>
+		.inf {
+			width: 20px;
+			height: 20px;
+			display: none;
+			background: url(images/zc-ico.png)no-repeat;
+		}
 
-</style>
+		form {
+			position: relative;
+		}
+
+		.inf {
+			position: absolute;
+			right: 0;
+			top: 50px;
+			width: 20px;
+			height: 20px;
+			display: none;
+			background: url(images/zc-ico.png)no-repeat;
+		}
+
+		form #inf2 {
+			top: 116px;
+		}
+	</style>
 </head>
 
 <body>
@@ -53,7 +70,9 @@
 		var paws = document.getElementsByClassName('paws')[0];
 		var inf = document.getElementById('inf');
 		var inf2 = document.getElementById('inf2');
-		console.log(inf);
+		var ture1 = false;
+		var ture2 = false;
+		// console.log(inf);
 		text.onblur = () => {
 			let _username = text.value;
 			if (_username.trim()) {
@@ -62,15 +81,19 @@
 				console.log(res);
 				if (res) {
 					inf.style.display = 'inline-block';
-					inf.style.backgroundPosition="-40px -151px" ;
+					inf.style.backgroundPosition = "-40px -151px";
+					ture1 = true;
 					// 正则通过再发送ajax验证用户名是否存在
 				} else {
 					inf.style.display = 'inline-block';
-					inf.style.backgroundPosition="-62px -151px" ;
+					inf.style.backgroundPosition = "-62px -151px";
 				}
+			} else {
+				inf.style.display = 'inline-block';
+				inf.style.backgroundPosition = "-62px -151px";
 			}
 		}
-		paws.onblur =()=>{
+		paws.onblur = () => {
 			let psw = paws.value;
 			if (psw.trim()) {
 				var reg = /^[a-zA-Z][\w\-]{5,17}$/;
@@ -78,41 +101,50 @@
 				console.log(res);
 				if (res) {
 					inf2.style.display = 'inline-block';
-					inf2.style.backgroundPosition="-40px -151px" ;
+					inf2.style.backgroundPosition = "-40px -151px";
 					// 正则通过再发送ajax验证用户名是否存在
+					ture2 = true;
 				} else {
 					inf2.style.display = 'inline-block';
-					inf2.style.backgroundPosition="-62px -151px" ;
+					inf2.style.backgroundPosition = "-62px -151px";
 				}
+			} else {
+				inf2.style.display = 'inline-block';
+				inf2.style.backgroundPosition = "-62px -151px";
 			}
 		}
 		$('.signin').click(function () {
-			let _username = $('.text').val();
-			let _password = $('.paws').val();
-			// let _mdl = mdl.checked;
+			let a_username = $('.text').val();
+			let a_password = $('.paws').val();
+			// console.log(3245);ture1=ture;a_password.trim() && a_username.trim()
+			if (ture1 && ture2) {
+				// console.log(32666645);
+				$.ajax({
+					type: "post", //请求方式
+					url: "/api/login", //路径
+					async: true, //异步:默认是异步，可以不写
+					data: {
+						name: a_username,
+						pasw: a_password
+						// qty: 15
+					}, //传输给后台的数据
+					success: function (str) {
+						var res = parseInt(str);
+						console.log(res);
 
-			$.ajax({
-				type: "post", //请求方式
-				url: '../js/login.js', //路径
-				async: true, //异步:默认是异步，可以不写
-				data: {
-					name: _username,
-					paws: _password,
-					// qty: 15
-				}, //传输给后台的数据
-				success: function (str) {
-					// console.log(str);
-					checkname(str);
-				}
-			});
-			function checkname() {
-				if (str) {
-					console.log('正确');
-					location.href = '../index.html';
-				} else {
-					console.log('错误');
-				}
+						if (res) {
+							location.href = "/html/list.html";
+						} else {
+							alert('账号或密码错误');
+						}
+						// checkname(str);
+					}
+				});
+			} else {
+				alert('请输入密码');
 			}
+
+
 
 		})
 

@@ -1,15 +1,14 @@
-var mysql = require('mysql');
-console.log(1323);
+﻿var mysql = require('mysql');
+
 //创建连接池
 var pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'root',
     port: 3306,
-    database: 'egu',
+    database: 'node',
 
 });
 
-pool.query('select * from users', (error, rows) => {
-    console.log(error, rows);
-});
+
+module.exports = pool;

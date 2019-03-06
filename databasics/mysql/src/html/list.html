@@ -4,9 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>layout 后台大布局 - Layui</title>
+    <title>商品列表</title>
     <link rel="stylesheet" href="../layui/layui/css/layui.css">
     <script src="../layui/layui/layui.js"></script>
+    <script src="jquery-1.10.1.min.js"></script>
 </head>
 
 <body class="layui-layout-body">
@@ -66,14 +67,17 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">商品管理</a>
                         <dl class="layui-nav-child">
-                            <dd>
-                                <a href="javascript:;">商品列表</a>
+                            <dd class="layui-this">
+                                <a href="./list.html">商品列表</a>
                             </dd>
                             <dd>
-                                <a href="javascript:;">商品分类</a>
+                                <!-- <a href="./goods_clsaaify.html"></a> -->
+                                <a href="./goods_clsaaify.html" ,>
+                                    商品分类
+                                </a>
                             </dd>
                             <dd>
-                                <a href="javascript:;">商品添加</a>
+                                <a href="./goods_add.html">商品添加</a>
                             </dd>
                             <dd>
                                 <a href=""></a>
@@ -84,10 +88,10 @@
                         <a href="javascript:;">用户管理</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;">用户列表</a>
+                                <a href="./username_list.html">用户列表</a>
                             </dd>
                             <dd>
-                                <a href="javascript:;">添加用户</a>
+                                <a href="./add_name.html">添加用户</a>
                             </dd>
 
                         </dl>
@@ -107,15 +111,15 @@
             </div>
         </div>
 
-        <div class="layui-body">
+        <div class="layui-body " id="zhuti">
             <!-- 内容主体区域 -->
             <div style="padding: 15px;">
                 <table class="layui-hide" id="test" lay-filter="test"></table>
                 <script type="text/html" id="toolbarDemo">
-                    <div class="layui-btn-container">
+                    <div class="layui-btn-container ">
                       <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
                       <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-                      <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                      <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">删除</button>
                     </div>
                   </script>
                 <script type="text/html" id="barDemo">
@@ -133,49 +137,107 @@
 
                         table.render({
                             elem: '#test'
-                            , url: '/test/table/demo1.json'
+                            , url: '/api/list'
                             , toolbar: '#toolbarDemo'
                             , title: '用户数据表'
                             , totalRow: true
+                            , page: true//开启分页
                             , cols: [[
                                 { type: 'checkbox', fixed: 'left' }
-                                , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
-                                , { field: 'username', title: '用户名', width: 120, edit: 'text' }
+                                , { field: 'id', title: '#', width: 80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
+                                , { field: 'name', title: '商品名称', width: 180, edit: 'text' }
                                 , {
-                                    field: 'email', title: '邮箱', width: 150, edit: 'text', templet: function (res) {
-                                        return '<em>' + res.email + '</em>'
-                                    }
-                                }
-                                , { field: 'experience', title: '积分', width: 80, sort: true, totalRow: true }
-                                , { field: 'sex', title: '性别', width: 80, edit: 'text', sort: true }
-                                , { field: 'logins', title: '登入次数', width: 100, sort: true, totalRow: true }
-                                , { field: 'sign', title: '签名' }
-                                , { field: 'city', title: '城市', width: 100 }
-                                , { field: 'ip', title: 'IP', width: 120 }
-                                , { field: 'joinTime', title: '加入时间', width: 120 }
-                                , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
-                            ]]
-                            , page: true
-                        });
+                                    field: 'class', title: '分类', width: 80, edit: 'text'
 
+                                }
+                                , { field: 'oPrice', title: '价格(原价)', width: 150, sort: true, totalRow: true }
+                                , { field: 'nPrice', title: '价格(现价)', width: 150, edit: 'text', sort: true }
+                                , { field: 'reserve', title: '库存', width: 100 }
+                                , { field: 'status', title: '状态', width: 100, sort: true, totalRow: true }
+                                , { field: 'date', title: '添加时间', width: 154 }
+                                ,
+                                , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 112 }
+                            ]]
+
+
+                        });
                         //工具栏事件
                         table.on('toolbar(test)', function (obj) {
                             var checkStatus = table.checkStatus(obj.config.id);
                             switch (obj.event) {
                                 case 'getCheckData':
                                     var data = checkStatus.data;
+                                    console.log(data);
                                     layer.alert(JSON.stringify(data));
                                     break;
                                 case 'getCheckLength':
                                     var data = checkStatus.data;
+                                    console.log(data);//打印选中条数
+                                    console.log(data.length);
+
                                     layer.msg('选中了：' + data.length + ' 个');
+                                    var delsum = [];//定义空数组存id
+                                    for (let i = 0; i < data.length; i++) {
+                                        delsum.push(i);//push进一个数组里
+                                    }
+                                    for (let i = 0; i < data.length; i++) {
+                                        var id = data[delsum[i]].id;
+                                        $.ajax({
+                                            type: "get", //请求方式
+                                            url: "/api/del_list", //路径
+                                            async: true, //异步:默认是异步，可以不写
+                                            data: {
+                                                id: id
+
+                                            },
+                                            // 传输给后台的数据
+                                            success: function (str) {
+                                                // console.log(str);
+                                                // checkname(str);
+                                            }
+                                        })
+                                    }
                                     break;
                                 case 'isAll':
                                     layer.msg(checkStatus.isAll ? '全选' : '未全选')
                                     break;
                             };
                         });
+                        // console.log(table);
+                        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                            var data = obj.data //获得当前行数据
+                                , layEvent = obj.event; //获得 lay-event 对应的值
+                            if (layEvent === 'detail') {
+                                layer.msg('查看操作');
+                            } else if (layEvent === 'del') {
+                                layer.confirm('真的删除行么', function (index) {
+                                    obj.del(); //删除对应行（tr）的DOM结构
+                                    layer.close(index);
+                                    var num = data.id;
+                                    //向服务端发送删除指令
+                                    $.ajax({
+                                        type: "get",
+                                        url: "/api/del_list?id=" + num,
+                                        async: true,
+
+                                    })
+
+                                });
+                            } else if (layEvent === 'edit') {//点击跳转编辑页面，并带相关id回去给后端，后端接收id查相应信息传到编辑页面渲染
+                                var num = data.id;
+                                location.href = "goods_edit.html?id=" + num;
+
+
+                            }
+                        });
+
+
+
                     });
+
+
+
+
                 </script>
             </div>
         </div>
@@ -185,12 +247,12 @@
 
         </div>
     </div>
-    <script src="../src/layui.js"></script>
+    <!-- <script src="../layui/layui/layui.js"></script> -->
     <script>
         //JavaScript代码区域
         layui.use('element', function () {
             var element = layui.element;
-
+            // console.log(123456);
         });
     </script>
 </body>
